@@ -14,6 +14,25 @@ sect3_plantingw3_someColumnsRemovedToSaveSpace <- read_csv("~/Desktop/GDN Confer
 
 sect3_harvestw3_RemoveVariableSaveSpace <- read_csv("~/Desktop/GDN Conference/PAPER SUBMISSION/DATA/NIG DATASET/sect3_harvestw3.RemoveVariableSaveSpace.csv")
 
+sect11b_harvestw3 <- read_csv("~/Desktop/GDN Conference/PAPER SUBMISSION/DATA/NIG DATASET/NIG_2015/NGA_2015_GHSP-W3_v02_M_CSV/sect11b_harvestw3.csv")
+View(sect11b_harvestw3)
+fuel_data_harvest <- sect11b_harvestw3 %>%
+  dplyr::filter(item_desc == "KEROSENE" | item_desc == "GAS" | item_desc == "ELECTRICITY" | item_desc
+                == "FIREWOOD" | item_desc == "CHARCOAL" | item_desc == "PETROL" | item_desc 
+                == "DIESEL") %>%
+  na.omit() %>%
+  spread(key = item_desc, value = s11bq4) %>%
+  replace_na(list("CHARCOAL" = 0, "DIESEL" = 0, "ELECTRICITY" = 0, "FIREWOOD" = 0, "GAS" = 0,
+                  "KEROSENE" = 0, "PETROL" = 0))
+  
+
+
+skim(fuel_data_harvest)
+  
+View(fuel_data_harvest)
+
+
+
 labor_earn_harvest <- sect3_harvestw3_RemoveVariableSaveSpace 
 labor_earn_harvest.select <- labor_earn_harvest %>%
   select(1:6, s3q21a) %>%
