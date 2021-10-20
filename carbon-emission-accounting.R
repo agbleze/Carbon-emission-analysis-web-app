@@ -24,14 +24,46 @@ fuel_data_harvest <- sect11b_harvestw3 %>%
   spread(key = item_desc, value = s11bq4) %>%
   replace_na(list("CHARCOAL" = 0, "DIESEL" = 0, "ELECTRICITY" = 0, "FIREWOOD" = 0, "GAS" = 0,
                   "KEROSENE" = 0, "PETROL" = 0))
-  
 
 
-skim(fuel_data_harvest)
-  
+
+fuel_data_harvest.grp <- group_by(fuel_data_harvest, state, lga, hhid)  
+fuel_data_harvest.sum <- summarize_at(fuel_data_harvest.grp,c("CHARCOAL", "DIESEL", "ELECTRICITY",
+                                                               "KEROSENE","GAS", "PETROL"), .funs = sum)
+
+### estmate co2 emission for petrol at household level
+petrol_data_harvet.CO2emission <- fuel_data_harvest.sum %>%
+  select(1:3, PETROL) %>%
+  mutate(petrol.total_expend = PETROL, price_per_liter = 87, total_liter_consumed = (petrol.total_expend/price_per_liter),
+         GHG_emission_factor.CO2 = 2.31, total.CO2_produced.kg = (total_liter_consumed * GHG_emission_factor.CO2))
+
+### estimate co2 emission for kerosene at household level
+kerosene_data_harvest.CO2emission <- fuel_data_harvest.sum%>%
+  select(1:3, KEROSENE) %>%
+  mutate(kerosene.total_expend = KEROSENE, price_per_liter = 50, total_liter_consumed = (kerosene.total_expend/price_per_liter),
+         GHG_emission_factor.CO2 = 2.5, total.CO2_produced.kg = (total_liter_consumed * GHG_emission_factor.CO2))
+
+### estimate co2 emission for LPG at household level
+lpgas_data_harvest.CO2emission <- fuel_data_harvest.sum %>%
+  select(1:3, GAS) %>%
+  mutate(gas.total_expend = GAS, price_per_liter = 368.396, total.kg_consumed = (gas.total_expend/price_per_liter), kg_to_liter_conversion = 1.96, 
+         total_liter_consumed = (total.kg_consumed * kg_to_liter_conversion), GHG_emission_factor.CO2 = 1.51,
+          total.CO2_produced.kg = (total_liter_consumed * GHG_emission_factor.CO2))
+
+
+### estimate co2 emission for electricity at household level
+electricity_data_harvest.CO2emission <- fuel_data_harvest.sum %>%
+  selet(1:3, ELECTRICITY) %>%
+  mutate(electricity_total_expend = ELECTRICITY, price_per_KWh = 29, total.KWh_consumed = (electricity_total_expend/price_per_KWh),
+         GHG_emission_factor.CO2 = 0.4034043, total.CO2.consumed = (total.KWh_consumed * GHG_emission_factor.CO2))
+
+View(lpgas_data_harvest.CO2emission)
+View(kerosene_data_harvest.CO2emission)
+View(fuel_data_harvest.grp)
+View(fuel_data_harvest.mean)
 View(fuel_data_harvest)
-
-
+View(fuel_data_harvest.sum)
+View(petrol_data_harvet)
 
 labor_earn_harvest <- sect3_harvestw3_RemoveVariableSaveSpace 
 labor_earn_harvest.select <- labor_earn_harvest %>%
