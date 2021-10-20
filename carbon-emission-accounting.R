@@ -12,6 +12,20 @@ sect3_harvestw3 <- read_csv("~/Desktop/GDN Conference/PAPER SUBMISSION/DATA/NIG 
 
 sect3_plantingw3_someColumnsRemovedToSaveSpace <- read_csv("~/Desktop/GDN Conference/PAPER SUBMISSION/DATA/NIG DATASET/sect3_plantingw3_someColumnsRemovedToSaveSpace.csv")
 
+sect3_harvestw3_RemoveVariableSaveSpace <- read_csv("~/Desktop/GDN Conference/PAPER SUBMISSION/DATA/NIG DATASET/sect3_harvestw3.RemoveVariableSaveSpace.csv")
+
+labor_earn_harvest <- sect3_harvestw3_RemoveVariableSaveSpace 
+labor_earn_harvest.select <- labor_earn_harvest %>%
+  select(1:6, s3q21a) %>%
+  na.omit()
+
+labor_earn_harvest.grp <- group_by(labor_earn_harvest.select, state, lga, hhid)
+labor_mean_income_harvest <- summarize(labor_earn_harvest.grp, income_mean = mean(s3q21a))
+View(labor_mean_income_harvest)
+
+View(sect3_harvestw3_RemoveVariableSaveSpace)
+
+
 
 labour_earnings_planting <- sect3_plantingw3_someColumnsRemovedToSaveSpace
 
