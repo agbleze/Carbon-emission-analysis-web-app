@@ -53,10 +53,12 @@ lpgas_data_harvest.CO2emission <- fuel_data_harvest.sum %>%
 
 ### estimate co2 emission for electricity at household level
 electricity_data_harvest.CO2emission <- fuel_data_harvest.sum %>%
-  selet(1:3, ELECTRICITY) %>%
+  select(1:3, ELECTRICITY) %>%
   mutate(electricity_total_expend = ELECTRICITY, price_per_KWh = 29, total.KWh_consumed = (electricity_total_expend/price_per_KWh),
          GHG_emission_factor.CO2 = 0.4034043, total.CO2.consumed = (total.KWh_consumed * GHG_emission_factor.CO2))
 
+
+View(electricity_data_harvest.CO2emission)
 View(lpgas_data_harvest.CO2emission)
 View(kerosene_data_harvest.CO2emission)
 View(fuel_data_harvest.grp)
