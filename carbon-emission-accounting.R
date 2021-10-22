@@ -69,6 +69,8 @@ View(petrol_data_harvet)
 
 ## assign data to new variable
 labor_earn_harvest <- sect3_harvestw3_RemoveVariableSaveSpace 
+
+## select required variables and remove NAs
 labor_earn_harvest.select <- labor_earn_harvest %>%
   select(1:6, s3q21a) %>%
   na.omit()
