@@ -67,6 +67,7 @@ View(fuel_data_harvest)
 View(fuel_data_harvest.sum)
 View(petrol_data_harvet)
 
+## assign data to new variable
 labor_earn_harvest <- sect3_harvestw3_RemoveVariableSaveSpace 
 labor_earn_harvest.select <- labor_earn_harvest %>%
   select(1:6, s3q21a) %>%
