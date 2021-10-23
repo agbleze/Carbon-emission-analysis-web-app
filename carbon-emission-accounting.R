@@ -31,7 +31,7 @@ fuel_data_harvest.grp <- group_by(fuel_data_harvest, state, lga, hhid)
 fuel_data_harvest.sum <- summarize_at(fuel_data_harvest.grp,c("CHARCOAL", "DIESEL", "ELECTRICITY",
                                                                "KEROSENE","GAS", "PETROL"), .funs = sum)
 
-### estmate co2 emission for petrol at household level
+### estimate co2 emission for petrol at household level
 petrol_data_harvet.CO2emission <- fuel_data_harvest.sum %>%
   select(1:3, PETROL) %>%
   mutate(petrol.total_expend = PETROL, price_per_liter = 87, total_liter_consumed = (petrol.total_expend/price_per_liter),
