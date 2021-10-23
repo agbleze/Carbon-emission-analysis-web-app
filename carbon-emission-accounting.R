@@ -58,7 +58,7 @@ electricity_data_harvest.CO2emission <- fuel_data_harvest.sum %>%
          GHG_emission_factor.CO2 = 0.4034043, total.CO2.consumed = (total.KWh_consumed * GHG_emission_factor.CO2))
 
 ## estimate co2 emission for charcoal at household level
-
+charcoal_data_harvest_co2emission <- fuel_data_harvest.sum %>%
 
 
 View(electricity_data_harvest.CO2emission)
